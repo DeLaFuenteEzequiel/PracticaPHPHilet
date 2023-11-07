@@ -18,8 +18,9 @@ class Welcome extends MY_controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/userguide3/general/urls.html
 	 */
-	public function index()
+	public function index($mostrar=true)
 	{
-		$this->mostrar("");
+		$parametros=array("mostrar_barra"=>$mostrar);
+		$this->mostrar('',$parametros);
 	}
 }
