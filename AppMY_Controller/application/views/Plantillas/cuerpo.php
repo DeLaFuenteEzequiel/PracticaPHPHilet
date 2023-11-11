@@ -1,1 +1,0 @@
-<h1>Vista por defectos</h1>
