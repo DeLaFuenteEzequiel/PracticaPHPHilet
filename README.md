@@ -1,2 +1,4 @@
-# PracticaCodeIgniter
-Practica para la materia Practicas PHP del Instituto Hilet
+# Practica PHP
+Practica para la materia Practicas Profesionalizantes(PHP) del Instituto Hilet
+
+
