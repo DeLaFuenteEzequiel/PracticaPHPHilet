@@ -31,16 +31,10 @@ class InicioController extends CI_Controller {
         redirect("InicioController/index");
     }
 
-
-
-    public function eliminar_ajax($user_id) {
-        error_reporting(E_ALL);
-        ini_set('display_errors', '1');
-    
+    public function delete_ajax($user_id) {
         try {
-            echo "Deleting user with ID: " . $user_id;
             $result = $this->UsersModel->delete($user_id);
-            
+    
             if ($result > 0) {
                 echo json_encode(array('status' => 'success'));
             } else {
@@ -53,7 +47,7 @@ class InicioController extends CI_Controller {
     
     
     
-    public function modificar_ajax($user_id, $new_data) {
+    public function modify_ajax($user_id, $new_data) {
         
         $this->UsersModel->edit($user_id, $new_data);
         echo json_encode(array('status' => 'success'));

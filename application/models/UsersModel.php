@@ -32,9 +32,6 @@ class UsersModel extends CI_Model {
     public function delete($user_id) {
         try {
             $this->db->where($this->pk, $user_id);
-            $query = $this->db->get_compiled_delete($this->table);
-            error_log("Deleting user with ID: $user_id. SQL Query: $query");
-    
             $this->db->delete($this->table);
             return $this->db->affected_rows();
         } catch (Exception $e) {
@@ -42,6 +39,7 @@ class UsersModel extends CI_Model {
             return 0;
         }
     }
+    
     
     
     public function edit($user_id, $data) {

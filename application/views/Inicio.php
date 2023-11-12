@@ -32,40 +32,44 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     $(document).ready(function() {
+
         // Acción de Ver Usuario
         $('.btn-ver').click(function() {
             // Encuentra la fila más cercana y busca los datos directamente en sus celdas
             var user = $(this).closest('tr').find('td[data-field="user"]').text();
             var name = $(this).closest('tr').find('td[data-field="name"]').text();
-            alert(`Usuario: ${user}\nNombre: ${name}`);
+            alert('Usuario: ' + user + '\nNombre: ' + name);
         });
+        
 
-
-         // Acción de Eliminar Usuario
-         $('.btn-eliminar').click(function() {
+        // Acción de Eliminar Usuario
+        $('.btn-eliminar').click(function() {
             var userId = $(this).data('user_id');
-            console.log('User ID:', userId);
-   
-    if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-        $.ajax({
-            url: "<?php echo site_url('InicioController/eliminar_ajax/'); ?>" + userId,
-            type: "POST",
-            dataType: "json",
-            success: function(data) {
-                console.log(data);
-                if (data.status === 'success') {
-                    alert('Usuario eliminado correctamente.');
-                } else {
-                    alert('Error al eliminar el usuario.');
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log('AJAX Error: ' + textStatus);
-                console.log('Error Thrown: ' + errorThrown);
+             // console.log('User ID:', userId);  
+            if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+                $.ajax({
+                    url: "<?php echo site_url('InicioController/delete_ajax/'); ?>" + userId,
+                    type: "POST",
+                    contentType: "application/json", 
+                    data: JSON.stringify({}), 
+                    dataType: "json",
+                    success: function(data) {
+                        //console.log(data);
+                        if (data.status === 'success') {
+                            alert('Usuario eliminado correctamente.');
+                            location.reload(); //buenisimo para recargar pagina ¿asincronico?
+                        } else {
+                            alert('Error al eliminar el usuario.');
+                        }
+                    },                   
+                // error: function(jqXHR, textStatus, errorThrown) {
+                //     console.log('AJAX Error: ' + textStatus);
+                //     console.log('Error Thrown: ' + errorThrown);
+                // }
+                });
             }
         });
-    }
-});
+
 
 
 
@@ -83,7 +87,7 @@
                 // AJAX para modificar el usuario
                 $.ajax({
                    
-                    url: "<?php echo site_url('InicioController/modificar_ajax/'); ?>" + userId,
+                    url: "<?php echo site_url('InicioController/modify_ajax/'); ?>" + userId,
 
                     type: "POST",
                     data: { user: newUser, name: newName },
