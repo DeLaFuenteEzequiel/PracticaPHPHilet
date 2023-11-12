@@ -1,16 +1,18 @@
-<form>
+<form method="post" action="<?php echo site_url('InicioController/insert_user'); ?>">
   <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <label for="exampleInputEmail1">Nombre de Usuario</label>
+    <input type="text" class="form-control" id="user" name="user">
   </div>
+
   <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1">
+    <label for="exampleInputPassword1">Contraseña</label>
+    <input type="password" class="form-control" id="password" name ="password">
   </div>
-  <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+
+  <div class="form-group">
+    <label for="exampleInputEmail">Nombre Real</label>
+    <input type="text" class="form-control" id="name" name ="name">
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+ 
+  <button type="submit" class="btn btn-primary">Agregar Usuario</button>
 </form>

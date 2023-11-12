@@ -1,5 +1,6 @@
 <?php
 
+
 class UsersModel extends CI_Model {
 
     protected $table = "users";
@@ -26,5 +27,26 @@ class UsersModel extends CI_Model {
         } else {
             return false;
         }
+    }
+
+    public function delete($user_id) {
+        try {
+            $this->db->where($this->pk, $user_id);
+            $query = $this->db->get_compiled_delete($this->table);
+            error_log("Deleting user with ID: $user_id. SQL Query: $query");
+    
+            $this->db->delete($this->table);
+            return $this->db->affected_rows();
+        } catch (Exception $e) {
+            error_log('Error en UsersModel->delete: ' . $e->getMessage());
+            return 0;
+        }
+    }
+    
+    
+    public function edit($user_id, $data) {
+        $this->db->where($this->pk, $user_id);
+        $this->db->update($this->table, $data);
+        return $this->db->affected_rows();
     }
 }

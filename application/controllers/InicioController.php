@@ -1,5 +1,4 @@
 <?php
-
 class InicioController extends CI_Controller {
 
     public function __construct() {
@@ -20,5 +19,45 @@ class InicioController extends CI_Controller {
         $this->load->view('footer');
     }
 
+    public function insert_user() {
+        $data = array(
+            'user' => $this->input->post('user'),
+            'password' => $this->input->post('password'),
+            'name' => $this->input->post('name')
+        );
+
+        $this->UsersModel->create($data);
+
+        redirect("InicioController/index");
+    }
+
+
+
+    public function eliminar_ajax($user_id) {
+        error_reporting(E_ALL);
+        ini_set('display_errors', '1');
+    
+        try {
+            echo "Deleting user with ID: " . $user_id;
+            $result = $this->UsersModel->delete($user_id);
+            
+            if ($result > 0) {
+                echo json_encode(array('status' => 'success'));
+            } else {
+                echo json_encode(array('status' => 'error', 'message' => 'Error deleting user.'));
+            }
+        } catch (Exception $e) {
+            echo json_encode(array('status' => 'error', 'message' => $e->getMessage()));
+        }
+    }
+    
+    
+    
+    public function modificar_ajax($user_id, $new_data) {
+        
+        $this->UsersModel->edit($user_id, $new_data);
+        echo json_encode(array('status' => 'success'));
+    }
+    
     
 }
