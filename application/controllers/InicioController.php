@@ -4,6 +4,7 @@ class InicioController extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model("UsersModel");
+        $this->load->library('form_validation');
     }
 
     // ... (otras funciones del controlador)
@@ -24,16 +25,28 @@ class InicioController extends CI_Controller {
 
     // CRUD
     public function insert_user() {
-        $data = array(
-            'user' => $this->input->post('user'),
-            'password' => $this->input->post('password'),
-            'name' => $this->input->post('name'),
-            'antiquity' => $this->input->post('antiquity'),
-            'salary' => $this->input->post('salary')
-        );
+        
+        $this->form_validation->set_rules('user', 'Nombre de Usuario', 'required');
+        $this->form_validation->set_rules('password', 'Contraseña', 'required');
+        $this->form_validation->set_rules('name', 'Nombre Real', 'required');
+        $this->form_validation->set_rules('antiquity', 'Antiguedad', 'required');
+        $this->form_validation->set_rules('salary', 'Salario', 'required');
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
 
-        $this->UsersModel->create($data);
-        redirect("InicioController/index");
+        if ($this->form_validation->run() == false) {
+            $this->create();
+        } else {
+            $data = array(
+                'user' => $this->input->post('user'),
+                'password' => $this->input->post('password'),
+                'name' => $this->input->post('name'),
+                'antiquity' => $this->input->post('antiquity'),
+                'salary' => $this->input->post('salary')
+            );
+
+            $this->UsersModel->create($data);
+            redirect("InicioController/index");
+        }
     }
 
     public function delete_ajax($user_id) {
