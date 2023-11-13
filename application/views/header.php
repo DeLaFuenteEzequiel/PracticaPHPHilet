@@ -10,7 +10,7 @@
             
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-            <a class="navbar-brand" >Administrador</a>
+            <a class="navbar-brand" >Inicio</a>
             
             <div class="collapse navbar-collapse" id="navbarNav">
 
@@ -24,7 +24,7 @@
                 </ul>
 
             </div>
-            
+
         </nav>
 
     <?php } ?>
