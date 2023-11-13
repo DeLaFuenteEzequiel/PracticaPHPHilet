@@ -8,18 +8,18 @@
 <body>
 
 <?php
-// Verifica si el controlador y el método no son "LoginController" e "index"
+
 if ($this->router->fetch_class() !== 'LoginController' || $this->router->fetch_method() !== 'index') {
     ?>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Administrador</a>
 
-        <!-- Botón para colapsar la barra de navegación en dispositivos pequeños -->
+       
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Estructura de la barra de navegación -->
+       
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">

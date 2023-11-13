@@ -23,7 +23,9 @@ class InicioController extends CI_Controller {
         $data = array(
             'user' => $this->input->post('user'),
             'password' => $this->input->post('password'),
-            'name' => $this->input->post('name')
+            'name' => $this->input->post('name'),
+            'antiquity' => $this->input->post('antiquity'),
+            'salary' => $this->input->post('salary')
         );
 
         $this->UsersModel->create($data);
