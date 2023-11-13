@@ -47,6 +47,20 @@ class InicioController extends CI_Controller {
         }
     }
     
+    public function update_user_ajax($user_id) {
+        try {
+            $data = json_decode(file_get_contents('php://input'), true);
+            $result = $this->UsersModel->update($user_id, $data);
+    
+            if ($result > 0) {
+                echo json_encode(array('status' => 'success'));
+            } else {
+                echo json_encode(array('status' => 'error', 'message' => 'Error updating user.'));
+            }
+        } catch (Exception $e) {
+            echo json_encode(array('status' => 'error', 'message' => $e->getMessage()));
+        }
+    }
     
     public function modify_ajax($user_id) {
         // Obtén los datos del cuerpo de la solicitud POST como un objeto JSON

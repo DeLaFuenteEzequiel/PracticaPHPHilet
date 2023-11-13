@@ -40,37 +40,19 @@ class UsersModel extends CI_Model {
         }
     }
   
-    public function get_user_by_id($user_id) {
-        return $this->db->get_where($this->table, array($this->pk => $user_id))->row_array();
-    }
-    
-    public function edit($user_id, $data) {
+
+    public function update($user_id, $data) {
         try {
-            // Log para verificar los datos que se están utilizando para actualizar
-            error_log('Data to Update: ' . print_r($data, true));
-    
             $this->db->where($this->pk, $user_id);
             $this->db->update($this->table, $data);
-    
-            if ($this->db->affected_rows() > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return $this->db->affected_rows();
         } catch (Exception $e) {
-            error_log('Error en UsersModel->edit: ' . $e->getMessage());
-            return false;
+            error_log('Error en UsersModel->update: ' . $e->getMessage());
+            return 0;
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  
+
     
     
     
