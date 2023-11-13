@@ -1,6 +1,5 @@
 <?php
 
-
 class UsersModel extends CI_Model {
 
     protected $table = "users";
@@ -25,7 +24,7 @@ class UsersModel extends CI_Model {
             return 0;
         }
     }
-    
+
     public function update($user_id, $data) {
         try {
             $this->db->where($this->pk, $user_id);

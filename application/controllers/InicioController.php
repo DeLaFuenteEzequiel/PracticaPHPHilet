@@ -7,8 +7,6 @@ class InicioController extends CI_Controller {
         $this->load->library('form_validation');
     }
 
-    // ... (otras funciones del controlador)
-
     // Vistas
     public function index() {
         $data['users'] = $this->UsersModel->get_all_users();
