@@ -34,6 +34,4 @@ if ($this->router->fetch_class() !== 'LoginController' || $this->router->fetch_m
     <?php
 }
 ?>
-
-<div class="container">
-    <!-- Resto del contenido de la página se mantiene aquí -->
+    <br>

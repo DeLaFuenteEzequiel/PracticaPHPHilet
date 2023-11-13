@@ -1,3 +1,6 @@
+
+<div class = "container">
+<div class= "row">
 <form method="post" action="<?php echo site_url('InicioController/insert_user'); ?>">
   <div class="form-group">
     <label for="exampleInputEmail1">Nombre de Usuario</label>
@@ -26,3 +29,5 @@
  
   <button type="submit" class="btn btn-primary">Agregar Usuario</button>
 </form>
+</div>
+</div>

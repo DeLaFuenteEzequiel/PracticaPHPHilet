@@ -17,8 +17,8 @@
                         <th scope="row"><?php echo $user['user_id']; ?></th>
                         <td class="user-data" data-field="user"><?php echo $user['user']; ?></td>
                         <td class="user-data" data-field="name"><?php echo $user['name']; ?></td>
-                        <td class="user-data" data-field="name"><?php echo $user['antiquity']; ?></td>
-                        <td class="user-data" data-field="name"><?php echo $user['salary']; ?></td>
+                        <td class="user-data" data-field="antiquity"><?php echo $user['antiquity']; ?></td>
+                        <td class="user-data" data-field="salary"><?php echo $user['salary']; ?></td>
                         <td>
                             <button class="btn btn-info btn-ver" data-user-id="<?php echo $user['user_id']; ?>">Ver</button>
                             <button class="btn btn-warning btn-modificar" data-user-id="<?php echo $user['user_id']; ?>">Modificar</button>
@@ -41,7 +41,9 @@
         $('.btn-ver').click(function() {
             var user = $(this).closest('tr').find('td[data-field="user"]').text(); //find busca la fila mas cercana
             var name = $(this).closest('tr').find('td[data-field="name"]').text();
-            alert('Usuario: ' + user + '\nNombre: ' + name);
+            var antiquity = $(this).closest('tr').find('td[data-field="antiquity"]').text();
+            var salary = $(this).closest('tr').find('td[data-field="salary"]').text();
+            alert('Usuario: ' + user + '\nNombre: ' + name + '\nAntiguedad: ' + antiquity + '\nSalario: ' + salary);
         });
         
 
