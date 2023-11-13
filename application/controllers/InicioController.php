@@ -52,25 +52,60 @@ class InicioController extends CI_Controller {
         $data = json_decode($json, true);
     
         try {
-            // Llama a la función de edición del modelo
-            $result = $this->UsersModel->edit($user_id, $data);
+            // Log para verificar los datos recibidos
+            error_log('Received Data: ' . print_r($data, true));
     
-            // Verifica si la edición fue exitosa y devuelve una respuesta JSON
-            $response = array(
-                'status' => $result ? 'success' : 'error',
-                'message' => $result ? 'Usuario modificado correctamente.' : 'Error al modificar el usuario.'
-            );
+            // Obtiene los datos existentes del usuario
+            $existing_data = $this->UsersModel->get_user_by_id($user_id);
+    
+            // Log para verificar los datos existentes
+            error_log('Existing Data: ' . print_r($existing_data, true));
+    
+            // Verifica si hay cambios antes de intentar la actualización
+            $changes_exist = $existing_data !== $data;
+    
+            if ($changes_exist) {
+                // Log para verificar que se está intentando la actualización
+                error_log('Intentando Actualización...');
+    
+                $result = $this->UsersModel->edit($user_id, $data);
+    
+                // Log para verificar el resultado de la actualización
+                error_log('Resultado de Actualización: ' . ($result ? 'Éxito' : 'Error'));
+    
+                if ($result) {
+                    // Devuelve la nueva información del usuario en caso de éxito
+                    $response = array(
+                        'status' => 'success',
+                        'message' => 'Usuario modificado correctamente.',
+                        'data' => $data
+                    );
+                } else {
+                    $response = array(
+                        'status' => 'error',
+                        'message' => 'Error al modificar el usuario. No se realizaron cambios en la base de datos.'
+                    );
+                }
+            } else {
+                $response = array(
+                    'status' => 'info',
+                    'message' => 'No se realizaron cambios en los datos del usuario.'
+                );
+            }
     
             echo json_encode($response);
         } catch (Exception $e) {
             $response = array(
                 'status' => 'error',
-                'message' => $e->getMessage()
+                'message' => 'Error al procesar la solicitud: ' . $e->getMessage()
             );
     
             echo json_encode($response);
         }
     }
+    
+    
+    
     
     
     

@@ -39,37 +39,35 @@ class UsersModel extends CI_Model {
             return 0;
         }
     }
+  
+    public function get_user_by_id($user_id) {
+        return $this->db->get_where($this->table, array($this->pk => $user_id))->row_array();
+    }
     
     public function edit($user_id, $data) {
         try {
-            // Obtiene los datos existentes
-            $existing_data = $this->db->get_where($this->table, array($this->pk => $user_id))->row_array();
+            // Log para verificar los datos que se están utilizando para actualizar
+            error_log('Data to Update: ' . print_r($data, true));
     
-            // Verifica si hay cambios antes de intentar la actualización
-            $changes_detected = false;
-            foreach ($data as $key => $value) {
-                if (isset($existing_data[$key]) && $existing_data[$key] !== $value) {
-                    $changes_detected = true;
-                    break;
-                }
-            }
+            $this->db->where($this->pk, $user_id);
+            $this->db->update($this->table, $data);
     
-            if ($changes_detected) {
-                $this->db->where($this->pk, $user_id);
-                $this->db->update($this->table, $data);
-    
-                if ($this->db->affected_rows() > 0) {
-                    return array('status' => 'success');
-                } else {
-                    return array('status' => 'error', 'message' => 'No se realizaron cambios.');
-                }
+            if ($this->db->affected_rows() > 0) {
+                return true;
             } else {
-                return array('status' => 'error', 'message' => 'No se realizaron cambios.');
+                return false;
             }
         } catch (Exception $e) {
-            return array('status' => 'error', 'message' => $e->getMessage());
+            error_log('Error en UsersModel->edit: ' . $e->getMessage());
+            return false;
         }
     }
+    
+    
+    
+    
+    
+    
     
     
     
