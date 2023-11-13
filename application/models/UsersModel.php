@@ -15,6 +15,28 @@ class UsersModel extends CI_Model {
         return $this->db->get($this->table)->result_array();
     }
 
+    public function delete($user_id) {
+        try {
+            $this->db->where($this->pk, $user_id);
+            $this->db->delete($this->table);
+            return $this->db->affected_rows();
+        } catch (Exception $e) {
+            error_log('Error en UsersModel->delete: ' . $e->getMessage());
+            return 0;
+        }
+    }
+    
+    public function update($user_id, $data) {
+        try {
+            $this->db->where($this->pk, $user_id);
+            $this->db->update($this->table, $data);
+            return $this->db->affected_rows();
+        } catch (Exception $e) {
+            error_log('Error en UsersModel->update: ' . $e->getMessage());
+            return 0;
+        }
+    }
+  
     public function login($data) {
         $this->db->select("*");
         $this->db->where("user", $data['user']);
@@ -28,30 +50,6 @@ class UsersModel extends CI_Model {
             return false;
         }
     }
-
-    public function delete($user_id) {
-        try {
-            $this->db->where($this->pk, $user_id);
-            $this->db->delete($this->table);
-            return $this->db->affected_rows();
-        } catch (Exception $e) {
-            error_log('Error en UsersModel->delete: ' . $e->getMessage());
-            return 0;
-        }
-    }
-  
-
-    public function update($user_id, $data) {
-        try {
-            $this->db->where($this->pk, $user_id);
-            $this->db->update($this->table, $data);
-            return $this->db->affected_rows();
-        } catch (Exception $e) {
-            error_log('Error en UsersModel->update: ' . $e->getMessage());
-            return 0;
-        }
-    }
-  
 
     
     

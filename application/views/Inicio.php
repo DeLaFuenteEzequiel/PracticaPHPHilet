@@ -1,6 +1,7 @@
 <div class="container">
     <div class="card">
         <table class="table">
+
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -11,10 +12,11 @@
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
+
             <tbody>
                 <?php foreach ($users as $user): ?>
                     <tr>
-                        <th scope="row"><?php echo $user['user_id']; ?></th>
+                        <td scope="row"><?php echo $user['user_id']; ?></td>
                         <td class="user-data" data-field="user"><?php echo $user['user']; ?></td>
                         <td class="user-data" data-field="name"><?php echo $user['name']; ?></td>
                         <td class="user-data" data-field="antiquity"><?php echo $user['antiquity']; ?></td>
@@ -34,6 +36,7 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script>
     $(document).ready(function() {
 
@@ -50,7 +53,7 @@
         // Click eliminar
         $('.btn-eliminar').click(function() {
             var userId = $(this).data('user_id'); 
-            if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+            if (confirm('¿Estás seguro de que deseas eliminar este usuario?')){
                 $.ajax({
                     url: "<?php echo site_url('InicioController/delete_ajax/'); ?>" + userId,
                     type: "POST",
