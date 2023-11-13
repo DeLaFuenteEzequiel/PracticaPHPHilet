@@ -43,8 +43,19 @@ class UsersModel extends CI_Model {
     
     
     public function edit($user_id, $data) {
-        $this->db->where($this->pk, $user_id);
-        $this->db->update($this->table, $data);
-        return $this->db->affected_rows();
+        try {
+            $this->db->where($this->pk, $user_id);
+            $this->db->update($this->table, $data);
+    
+            if ($this->db->affected_rows() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            error_log('Error en UsersModel->edit: ' . $e->getMessage());
+            return false;
+        }
     }
+    
 }

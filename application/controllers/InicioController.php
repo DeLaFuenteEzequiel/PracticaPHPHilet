@@ -47,11 +47,35 @@ class InicioController extends CI_Controller {
     
     
     
-    public function modify_ajax($user_id, $new_data) {
-        
-        $this->UsersModel->edit($user_id, $new_data);
-        echo json_encode(array('status' => 'success'));
+    public function modify_ajax($user_id) {
+        try {
+            // Obtén los datos JSON del cuerpo de la solicitud
+            $json_data = json_decode(file_get_contents('php://input'), true);
+    
+            // Verifica si se obtuvieron datos JSON correctamente
+            if ($json_data !== null) {
+                // Extrae los datos del usuario y nombre del objeto JSON
+                $new_user = $json_data['user'];
+                $new_name = $json_data['name'];
+    
+                // Realiza la modificación del usuario
+                $result = $this->UsersModel->edit($user_id, ['user' => $new_user, 'name' => $new_name]);
+    
+                if ($result) {
+                    echo json_encode(['status' => 'success']);
+                } else {
+                    $error_message = $this->db->error()['message']; // Obtén el mensaje de error de la base de datos
+                    echo json_encode(['status' => 'error', 'message' => 'Error modifying user: ' . $error_message]);
+                }
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Invalid JSON data.']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
     }
+    
+    
     
     
 }
