@@ -34,6 +34,36 @@
     </div>
 </div>
 
+<div class = "container">
+<div class="row mt-3">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <button class="btn btn-primary" id="btnCalcularPromedio">Calcular Promedio de Sueldos</button>
+                <button class="btn btn-success" id="btnCalcularTotal">Calcular Total de Sueldos</button>
+                <button class="btn btn-warning" id="btnMenorSueldo">Menor Sueldo</button>
+                <button class="btn btn-danger" id="btnMayorSueldo">Mayor Sueldo</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Resultados</h5>
+                <p id="resultadoPromedio">Promedio: <span class="font-weight-bold">-</span></p>
+                <p id="resultadoTotal">Total: <span class="font-weight-bold">-</span></p>
+                <p id="resultadoMenorSueldo">Menor Sueldo: <span class="font-weight-bold">-</span></p>
+                <p id="resultadoMayorSueldo">Mayor Sueldo: <span class="font-weight-bold">-</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -53,7 +83,8 @@
         // Click eliminar
         $('.btn-eliminar').click(function() {
             var userId = $(this).data('user_id'); 
-            if (confirm('¿Estás seguro de que deseas eliminar este usuario?')){
+            if (confirm('¿Estás seguro de que deseas eliminar este usuario?'))
+            {
                 $.ajax({
                     url: "<?php echo site_url('InicioController/delete_ajax/'); ?>" + userId,
                     type: "POST",
@@ -111,6 +142,58 @@
                 },
             });
         });
+
+        //Calculos
+
+        // Click calcular promedio
+        $('#btnCalcularPromedio').click(function () {
+            $.ajax({
+                url: "<?php echo site_url('InicioController/calcular_promedio'); ?>",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $('#resultadoPromedio span').text(data.promedio.toFixed(2));
+                }
+            });
+        });
+
+        // Click calcular total
+        $('#btnCalcularTotal').click(function () {
+            $.ajax({
+                url: "<?php echo site_url('InicioController/calcular_total'); ?>",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $('#resultadoTotal span').text(data.total.toFixed(2));
+                }
+            });
+        });
+        
+        // Click menor sueldo
+        $('#btnMenorSueldo').click(function () {
+            $.ajax({
+                url: "<?php echo site_url('InicioController/obtener_menor_sueldo'); ?>",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $('#resultadoMenorSueldo span').text(data.menorSueldo.toFixed(2));
+                }
+            });
+        });
+
+        // Click mayor sueldo
+        $('#btnMayorSueldo').click(function () {
+            $.ajax({
+                url: "<?php echo site_url('InicioController/obtener_mayor_sueldo'); ?>",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $('#resultadoMayorSueldo span').text(data.mayorSueldo.toFixed(2));
+                }
+            });
+        });
+
+
 
       });
 </script>
