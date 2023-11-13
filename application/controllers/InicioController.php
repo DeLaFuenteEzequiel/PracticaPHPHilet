@@ -46,34 +46,39 @@ class InicioController extends CI_Controller {
     }
     
     
-    
     public function modify_ajax($user_id) {
+        // Obtén los datos del cuerpo de la solicitud POST como un objeto JSON
+        $json = file_get_contents('php://input');
+        $data = json_decode($json, true);
+    
         try {
-            // Obtén los datos JSON del cuerpo de la solicitud
-            $json_data = json_decode(file_get_contents('php://input'), true);
+            // Llama a la función de edición del modelo
+            $result = $this->UsersModel->edit($user_id, $data);
     
-            // Verifica si se obtuvieron datos JSON correctamente
-            if ($json_data !== null) {
-                // Extrae los datos del usuario y nombre del objeto JSON
-                $new_user = $json_data['user'];
-                $new_name = $json_data['name'];
+            // Verifica si la edición fue exitosa y devuelve una respuesta JSON
+            $response = array(
+                'status' => $result ? 'success' : 'error',
+                'message' => $result ? 'Usuario modificado correctamente.' : 'Error al modificar el usuario.'
+            );
     
-                // Realiza la modificación del usuario
-                $result = $this->UsersModel->edit($user_id, ['user' => $new_user, 'name' => $new_name]);
-    
-                if ($result) {
-                    echo json_encode(['status' => 'success']);
-                } else {
-                    $error_message = $this->db->error()['message']; // Obtén el mensaje de error de la base de datos
-                    echo json_encode(['status' => 'error', 'message' => 'Error modifying user: ' . $error_message]);
-                }
-            } else {
-                echo json_encode(['status' => 'error', 'message' => 'Invalid JSON data.']);
-            }
+            echo json_encode($response);
         } catch (Exception $e) {
-            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+            $response = array(
+                'status' => 'error',
+                'message' => $e->getMessage()
+            );
+    
+            echo json_encode($response);
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

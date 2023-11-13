@@ -40,22 +40,40 @@ class UsersModel extends CI_Model {
         }
     }
     
-    
-    
     public function edit($user_id, $data) {
         try {
-            $this->db->where($this->pk, $user_id);
-            $this->db->update($this->table, $data);
+            // Obtiene los datos existentes
+            $existing_data = $this->db->get_where($this->table, array($this->pk => $user_id))->row_array();
     
-            if ($this->db->affected_rows() > 0) {
-                return true;
+            // Verifica si hay cambios antes de intentar la actualización
+            $changes_detected = false;
+            foreach ($data as $key => $value) {
+                if (isset($existing_data[$key]) && $existing_data[$key] !== $value) {
+                    $changes_detected = true;
+                    break;
+                }
+            }
+    
+            if ($changes_detected) {
+                $this->db->where($this->pk, $user_id);
+                $this->db->update($this->table, $data);
+    
+                if ($this->db->affected_rows() > 0) {
+                    return array('status' => 'success');
+                } else {
+                    return array('status' => 'error', 'message' => 'No se realizaron cambios.');
+                }
             } else {
-                return false;
+                return array('status' => 'error', 'message' => 'No se realizaron cambios.');
             }
         } catch (Exception $e) {
-            error_log('Error en UsersModel->edit: ' . $e->getMessage());
-            return false;
+            return array('status' => 'error', 'message' => $e->getMessage());
         }
     }
+    
+    
+    
+    
+    
     
 }

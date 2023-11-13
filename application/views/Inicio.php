@@ -84,29 +84,30 @@ $('.btn-modificar').click(function() {
     if (newUser !== null && newName !== null) {
         // AJAX para modificar el usuario
         $.ajax({
-            url: "<?php echo site_url('InicioController/modify_ajax/') ?>" + userId,
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify({ user: newUser, name: newName }),
-            dataType: "json",
-            success: function(data) {
-                if (data.status === 'success') {
-                    alert('Usuario modificado correctamente.');
-                    // Puedes actualizar dinámicamente los datos en la tabla si es necesario
-                    user.text(newUser);
-                    name.text(newName);
-                } else {
-                    alert('Error al modificar el usuario: ' + data.message);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log('AJAX Error: ' + textStatus);
-                console.log('Error Thrown: ' + errorThrown);
-            }
-        });
+    url: "<?php echo site_url('InicioController/modify_ajax/') ?>" + userId,
+    type: "POST",
+    contentType: "application/json",
+    data: JSON.stringify({ user: newUser, name: newName }),
+    dataType: "json",
+    success: function(data) {
+        if (data.status === 'success') {
+            alert('Usuario modificado correctamente.');
+            // Puedes actualizar dinámicamente los datos en la tabla si es necesario
+            user.text(newUser);
+            name.text(newName);
+        } else {
+            alert('Error al modificar el usuario: ' + data.message);
+        }
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+        console.log('AJAX Error: ' + textStatus);
+        console.log('Error Thrown: ' + errorThrown);
     }
 });
 
+
+    }
+});
 
 
     });
